@@ -19,7 +19,7 @@
 */
 
 /* IMPORTANT: Compile with -lm:
-   mpicc mpi_mergesort.c -lm -o mpi_mergesort */ 
+   mpicc mpi_mergesort.c -lm -o mpi_mergesort */
 
 #include <stdlib.h>
 #include <stdio.h>

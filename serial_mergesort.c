@@ -24,7 +24,7 @@
 #include <omp.h>		// Omp used for timing only
 
 // Arrays size <= SMALL switches to insertion sort
-#define SMALL    32	
+#define SMALL    32
 
 void merge (int a[], int size, int temp[]);
 void insertion_sort (int a[], int size);

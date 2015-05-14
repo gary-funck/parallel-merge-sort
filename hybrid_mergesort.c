@@ -27,21 +27,22 @@
 // Arrays size <= SMALL switches to insertion sort
 #define SMALL    32
 
-     void merge (int a[], int size, int temp[]);
-     void insertion_sort (int a[], int size);
-     void mergesort_serial (int a[], int size, int temp[]);
-     void mergesort_parallel_mpi (int a[], int size, int temp[],
-				  int level, int my_rank, int max_rank,
-				  int tag, MPI_Comm comm, int threads);
-     int topmost_level_mpi (int my_rank);
-     void run_root_mpi (int a[], int size, int temp[], int max_rank, int tag,
-			MPI_Comm comm, int threads);
-     void run_node_mpi (int my_rank, int max_rank, int tag, MPI_Comm comm,
-			int threads);
-     void mergesort_parallel_omp (int a[], int size, int temp[], int threads);
-     int main (int argc, char *argv[]);
+void merge (int a[], int size, int temp[]);
+void insertion_sort (int a[], int size);
+void mergesort_serial (int a[], int size, int temp[]);
+void mergesort_parallel_mpi (int a[], int size, int temp[],
+			     int level, int my_rank, int max_rank,
+			     int tag, MPI_Comm comm, int threads);
+int topmost_level_mpi (int my_rank);
+void run_root_mpi (int a[], int size, int temp[], int max_rank, int tag,
+		   MPI_Comm comm, int threads);
+void run_node_mpi (int my_rank, int max_rank, int tag, MPI_Comm comm,
+		   int threads);
+void mergesort_parallel_omp (int a[], int size, int temp[], int threads);
+int main (int argc, char *argv[]);
 
-     int main (int argc, char *argv[])
+int
+main (int argc, char *argv[])
 {
   // All processes
   MPI_Init (&argc, &argv);
