@@ -96,7 +96,7 @@ main (int argc, char *argv[])
 	{
 	  if (!(a[i - 1] <= a[i]))
 	    {
-	      printf ("Implementtion error: a[%d]=%d > a[%d]=%d\n", i - 1,
+	      printf ("Implementation error: a[%d]=%d > a[%d]=%d\n", i - 1,
 		      a[i - 1], i, a[i]);
 	      MPI_Abort (MPI_COMM_WORLD, 1);
 	    }
