@@ -140,7 +140,6 @@ mergesort_parallel_omp (int a[], int size, int temp[], int threads)
 	  mergesort_parallel_omp (a + size / 2, size - size / 2,
 				  temp + size / 2, threads - threads / 2);
 	}
-	// The above use of temp + size/2 is an essential change from the serial version        
       }
       // Thread allocation is implementation dependent
       // Some threads can execute multiple sections while others are idle 
