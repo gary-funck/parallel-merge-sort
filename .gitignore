@@ -1,6 +1,6 @@
-*.log
-*.bak
 *~
+*.bak
+*.log
 hybrid_mergesort
 mpi_mergesort
 omp_mergesort
@@ -8,3 +8,4 @@ serial_mergesort
 tags
 upc_hybrid_mergesort
 upc_mergesort
+upc_no_copy_mergesort
