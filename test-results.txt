@@ -1,0 +1,25 @@
+The following results were collected on a dual processor
+Intel Xeon 5690 3.5 GHz system with 48G of memory.
+There are 12 total cores and 24 Hyper Threads.
+
+For hybrid runs, the following rules for deriving the number of
+OMP threads (NT) and MPI or UPC processes (P) were used.
+
+    If NP <= 8 Then P=2, NT=NP/2
+    If NP >  8 Then P=4, NT=NP/4
+
+This system is shared memory only, thus the MPI and UPC runs
+are single node only.
+
+Each test run sorted 100 million (100,000,000) random 32-bit integers.
+
+The results are sorted on the NP=16 column.
+                                               NP
+                             1     2     4     8    12    16    20    24
+omp_mergesort            11.83  6.54  3.76  2.46  2.44  1.92  2.00  1.98
+upc_hybrid_mergesort     11.59  6.30  4.00  2.61  2.71  2.15  2.14  2.17
+upc_mergesort            11.60  6.29  3.82  2.71  2.49  2.50  2.72  2.80
+hybrid_mergesort         11.73 12.00  7.00  5.66  5.60  4.07  4.07  3.88
+upc_no_copy_mergesort    11.59 14.90  8.32  5.06  4.01  4.24  4.33  4.16
+mpi_mergesort            11.47 11.77  9.15  6.52  4.69  5.20  4.42  4.23
+serial_mergesort         11.85 11.84 11.84 11.84 11.85 11.82 12.17 11.83

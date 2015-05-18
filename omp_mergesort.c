@@ -80,7 +80,7 @@ main (int argc, char *argv[])
     }
   // Random array initialization
   int i;
-  srand (time (NULL));
+  srand (314159);
   for (i = 0; i < size; i++)
     {
       a[i] = rand () % size;
@@ -157,7 +157,7 @@ void
 mergesort_serial (int a[], int size, int temp[])
 {
   // Switch to insertion sort for small arrays
-  if (size < SMALL)
+  if (size <= SMALL)
     {
       insertion_sort (a, size);
       return;

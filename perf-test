@@ -1,0 +1,87 @@
+#!/bin/bash
+make > /dev/null || exit $?
+N=100000000
+if [ $# -gt 1 ]; then
+  echo "too many args"
+  echo "usage: $0 [size-of-sort]"
+  exit 2
+fi
+if [ $# -eq 1 ]; then
+  if [[ $1 =~ ^[0-9][0-9]*$ ]]; then
+    N="$1"
+  else
+    echo "arg not a number: $1"
+    echo "usage: $0 [size-of-sort]"
+    exit 2
+  fi
+fi
+printf "%-24s" ""
+for np in 1 2 4 8 12 16 20 24; do
+  printf "%6d" "$np"
+done
+printf '\n'
+for test in \
+  serial_mergesort \
+  mpi_mergesort \
+  hybrid_mergesort \
+  omp_mergesort \
+  upc_hybrid_mergesort \
+  upc_mergesort \
+  upc_no_copy_mergesort
+do
+  printf "%-24s" $test
+  for np in 1 2 4 8 12 16 20 24
+  do
+    case $test in
+      serial_mergesort)
+        cmd="./$test $N";;
+      omp_mergesort)
+        cmd="./$test $N $np";;
+      mpi_mergesort)
+        cmd="mpirun -n $np -hosts localhost ./$test $N";;
+      hybrid_mergesort)
+        if [ $np = 1 ]; then
+          cmd="mpirun -n 1 -hosts localhost ./$test $N 1"
+        elif [ $np -lt 8 ]; then
+          # We use 2 processes and vary the number of OMP threads.
+	  op=`expr $np / 2`
+          cmd="mpirun -n 2 -hosts localhost ./$test $N $op"
+	else
+          # We use 4 processes and vary the number of OMP threads.
+	  op=`expr $np / 4`
+          cmd="mpirun -n 4 -hosts localhost ./$test $N $op"
+	fi
+	;;
+      upc_hybrid_mergesort)
+        if [ $np = 1 ]; then
+          cmd="./$test -n 1 $N 1"
+        elif [ $np -lt 8 ]; then
+          # We use 2 processes and vary the number of OMP threads.
+	  op=`expr $np / 2`
+          cmd="./$test -n 2 $N $op"
+	else
+          # We use 4 processes and vary the number of OMP threads.
+	  op=`expr $np / 4`
+          cmd="./$test -n 4 $N $op"
+	fi
+	;;
+      upc_mergesort|upc_no_copy_mergesort)
+        cmd="./$test -n $np $N";;
+      *)
+        echo "unknown test: $test"
+	exit 2 
+	;;
+    esac
+    t_sample=
+    for i in {1..5}; do
+      t=`eval "$cmd" |& awk '/^Elapsed = / {printf $3}'`
+      [ -n "$t" ] || t="N/A"
+      [ -n "$tsample" ] && t=" $t"
+      t_sample="${tsample}${t}"
+    done
+    median=`echo $t | tr ' ' '\n' | sort -k1n | head -3 | tail -1`
+    printf "%6s" "$median"
+  done
+  printf '\n'
+  # The sort below, sorts on np=16 which is generally the fastest.
+done | sort -k7n

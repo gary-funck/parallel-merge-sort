@@ -77,7 +77,7 @@ main (int argc, char *argv[])
 	  MPI_Abort (MPI_COMM_WORLD, 1);
 	}
       // Random array initialization
-      srand (time (NULL));
+      srand (314159);
       int i;
       for (i = 0; i < size; i++)
 	{
@@ -197,7 +197,7 @@ void
 mergesort_serial (int a[], int size, int temp[])
 {
   // Switch to insertion sort for small arrays
-  if (size < SMALL)
+  if (size <= SMALL)
     {
       insertion_sort (a, size);
       return;
