@@ -2,8 +2,8 @@
 Shared Memory, Message Passing, and Hybrid  Merge Sort: UPC, OpenMP, MPI and Hybrid Implementations
 
 
-This project demonstrates the implementation of a parallel merge algorithm implemented using sevaeral approaches.
-The programming languages and frameworks include:
+This project demonstrates the implementation of a parallel merge sort algorithm implemented using sevaeral approaches.
+The programming languages and frameworks used, include:
   - UPC (Unified Parallel C)
   - OpenMP
   - MPI
