@@ -25,10 +25,10 @@ tags: $(SRC)
 	ctags $?
 
 hybrid_mergesort: hybrid_mergesort.c
-	$(MPICC) $(CFLAGS) $(MPIFLAGS) $(OMPFLAGS) $? -o $@
+	$(MPICC) -cc=$(CC) $(CFLAGS) $(MPIFLAGS) $(OMPFLAGS) $? -o $@
 
 mpi_mergesort: mpi_mergesort.c
-	$(MPICC) $(CFLAGS) $(MPIFLAGS) $? -o $@
+	$(MPICC) -cc=$(CC) $(CFLAGS) $(MPIFLAGS) $? -o $@
 
 omp_mergesort: omp_mergesort.c
 	$(CC) $(CFLAGS) $(OMPFLAGS) $? -o $@
