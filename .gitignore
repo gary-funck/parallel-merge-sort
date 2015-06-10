@@ -1,6 +1,7 @@
 *~
 *.bak
 *.log
+get_time.o
 hybrid_mergesort
 mpi_mergesort
 omp_mergesort
