@@ -25,6 +25,12 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+#include <unistd.h>
+#if _POSIX_TIMERS
+#include <time.h>
+#else
+#include <sys/time.h>
+#endif
 #include <mpi.h>
 
 // Arrays size <= SMALL switches to insertion sort
@@ -40,6 +46,7 @@ int my_topmost_level_mpi (int my_rank);
 void run_root_mpi (int a[], int size, int temp[], int max_rank, int tag,
 		   MPI_Comm comm);
 void run_helper_mpi (int my_rank, int max_rank, int tag, MPI_Comm comm);
+double get_time (void);
 int main (int argc, char *argv[]);
 
 int
@@ -84,13 +91,11 @@ main (int argc, char *argv[])
 	  a[i] = rand () % size;
 	}
       // Sort with root process
-      double start = MPI_Wtime ();
+      double start = get_time ();
       run_root_mpi (a, size, temp, max_rank, tag, MPI_COMM_WORLD);
-      double end = MPI_Wtime ();
+      double end = get_time ();
       printf ("Start = %.2f\nEnd = %.2f\nElapsed = %.2f\n",
 	      start, end, end - start);
-      double wtick = MPI_Wtick ();
-      printf ("Wtick = %.8f\n1/Wtick = %.8f\n", wtick, 1.0 / wtick);
       // Result check
       for (i = 1; i < size; i++)
 	{
@@ -260,3 +265,45 @@ insertion_sort (int a[], int size)
       a[j + 1] = v;
     }
 }
+
+#if _POSIX_TIMERS
+#ifdef CLOCK_MONOTONIC_RAW
+/* System clock id passed to clock_gettime. CLOCK_MONOTONIC_RAW
+   is preferred.  It has been available in the Linux kernel
+   since version 2.6.28 */
+#define SYS_RT_CLOCK_ID CLOCK_MONOTONIC_RAW
+#else
+#define SYS_RT_CLOCK_ID CLOCK_MONOTONIC
+#endif
+
+double
+get_time (void)
+{
+  struct timespec ts;
+  double t;
+  if (clock_gettime (SYS_RT_CLOCK_ID, &ts) != 0)
+    {
+      perror ("clock_gettime");
+      abort ();
+    }
+  t = (double) ts.tv_sec + (double) ts.tv_nsec * 1.0e-9;
+  return t;
+}
+
+#else /* !_POSIX_TIMERS */
+
+double
+get_time (void)
+{
+  struct timeval tv;
+  double t;
+  if (gettimeofday (&tv, NULL) != 0)
+    {
+      perror ("gettimeofday");
+      abort ();
+    }
+  t = (double) tv.tv_sec + (double) tv.tv_usec * 1.0e-6;
+  return t;
+}
+
+#endif
