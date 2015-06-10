@@ -33,9 +33,8 @@ mpi_mergesort: mpi_mergesort.c
 omp_mergesort: omp_mergesort.c
 	$(CC) $(CFLAGS) $(OMPFLAGS) $? -o $@
 
-# Serial merge sort uses OMP for checking.
 serial_mergesort: serial_mergesort.c
-	$(CC) $(CFLAGS) $(OMPFLAGS) $? -o $@
+	$(CC) $(CFLAGS) $? -o $@
 
 upc_hybrid_mergesort: upc_hybrid_mergesort.upc
 	$(UPC) $(CFLAGS) $(OMPFLAGS) $(UPCFLAGS) $? -o $@
