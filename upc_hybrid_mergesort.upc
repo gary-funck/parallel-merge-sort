@@ -57,7 +57,7 @@ main (int argc, char *argv[])
       if (argc != 3)		/* argc must be 3 for proper execution! */
 	{
 	  printf ("Usage: %s array-size num-omp-threads\n", argv[0]);
-	  return 1;
+	  upc_global_exit (1);
 	}
       // Get arguments
       size = atoi (argv[1]);	// Array size 
@@ -81,7 +81,7 @@ main (int argc, char *argv[])
       if (a == NULL)
 	{
 	  printf ("Error: Could not allocate shred array of size %d\n", size);
-	  return 1;
+	  upc_global_exit (1);
 	}
       // Random array initialization
       srand (314159);
@@ -106,7 +106,7 @@ main (int argc, char *argv[])
 	    {
 	      printf ("Implementation error: a[%d]=%d > a[%d]=%d\n", i - 1,
 		      a[i - 1], i, a[i]);
-	      return 1;
+	      upc_global_exit (1);
 	    }
 	}
       puts ("-Success-");
