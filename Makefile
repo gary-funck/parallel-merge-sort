@@ -22,28 +22,32 @@ ALL :=  $(foreach src,$(SRC),$(subst .upc,,$(subst .c,,$(src))))
 default: $(ALL)
 
 tags: $(SRC)
-	ctags $?
+	ctags $^
 
-hybrid_mergesort: hybrid_mergesort.c
-	$(MPICC) -cc=$(CC) $(CFLAGS) $(MPIFLAGS) $(OMPFLAGS) $? -o $@
+get_time.o: get_time.c
+	$(CC) $(CFLAGS) -c $^ -o $@
 
-mpi_mergesort: mpi_mergesort.c
-	$(MPICC) -cc=$(CC) $(CFLAGS) $(MPIFLAGS) $? -o $@
+hybrid_mergesort: hybrid_mergesort.c get_time.o
+	$(MPICC) -cc=$(CC) $(CFLAGS) $(MPIFLAGS) $(OMPFLAGS) $^ -o $@
 
-omp_mergesort: omp_mergesort.c
-	$(CC) $(CFLAGS) $(OMPFLAGS) $? -o $@
+mpi_mergesort: mpi_mergesort.c get_time.o
+	$(MPICC) -cc=$(CC) $(CFLAGS) $(MPIFLAGS) $^ -o $@
 
-serial_mergesort: serial_mergesort.c
-	$(CC) $(CFLAGS) $? -o $@
+omp_mergesort: omp_mergesort.c get_time.o
+	$(CC) $(CFLAGS) $(OMPFLAGS) $^ -o $@
 
-upc_hybrid_mergesort: upc_hybrid_mergesort.upc
-	$(UPC) $(CFLAGS) $(OMPFLAGS) $(UPCFLAGS) $? -o $@
+serial_mergesort: serial_mergesort.c get_time.o
+	$(CC) $(CFLAGS) $^ -o $@
 
-upc_mergesort: upc_mergesort.upc
-	$(UPC) $(CFLAGS) $(UPCFLAGS) $? -o $@
+upc_hybrid_mergesort: upc_hybrid_mergesort.upc get_time.o
+	$(UPC) $(CFLAGS) $(OMPFLAGS) $(UPCFLAGS) $^ -o $@
 
-upc_no_copy_mergesort: upc_no_copy_mergesort.upc
-	$(UPC) $(CFLAGS) $(UPCFLAGS) $? -o $@
+upc_mergesort: upc_mergesort.upc get_time.o
+	$(UPC) $(CFLAGS) $(UPCFLAGS) $^ -o $@
+
+upc_no_copy_mergesort: upc_no_copy_mergesort.upc get_time.o
+	$(UPC) $(CFLAGS) $(UPCFLAGS) $^ -o $@
 
 clean:
+	@- rm -f get_time.o
 	@- rm -f $(ALL) tags
