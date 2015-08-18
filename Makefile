@@ -11,6 +11,7 @@ UPCFLAGS=
 SRC :=	hybrid_mergesort.c \
 	mpi_mergesort.c \
 	mpi_rma_mergesort.c \
+	mpi_rma_nc_mergesort.c \
 	omp_mergesort.c \
 	serial_mergesort.c \
 	upc_hybrid_mergesort.upc \
@@ -34,6 +35,9 @@ mpi_mergesort: mpi_mergesort.c get_time.o
 	$(MPICC) -cc=$(CC) $(CFLAGS) $(MPIFLAGS) $^ -o $@
 
 mpi_rma_mergesort: mpi_rma_mergesort.c get_time.o
+	$(MPICC) -cc=$(CC) $(CFLAGS) $(MPIFLAGS) $^ -o $@
+
+mpi_rma_nc_mergesort: mpi_rma_nc_mergesort.c get_time.o
 	$(MPICC) -cc=$(CC) $(CFLAGS) $(MPIFLAGS) $^ -o $@
 
 omp_mergesort: omp_mergesort.c get_time.o
