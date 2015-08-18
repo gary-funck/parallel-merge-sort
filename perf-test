@@ -23,6 +23,7 @@ printf '\n'
 for test in \
   serial_mergesort \
   mpi_mergesort \
+  mpi_rma_mergesort \
   hybrid_mergesort \
   omp_mergesort \
   upc_hybrid_mergesort \
@@ -37,7 +38,7 @@ do
         cmd="./$test $N";;
       omp_mergesort)
         cmd="./$test $N $np";;
-      mpi_mergesort)
+      mpi_mergesort|mpi_rma_mergesort)
         cmd="mpirun -n $np -hosts localhost ./$test $N";;
       hybrid_mergesort)
         if [ $np = 1 ]; then
