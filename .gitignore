@@ -4,6 +4,7 @@
 get_time.o
 hybrid_mergesort
 mpi_mergesort
+mpi_rma_mergesort
 omp_mergesort
 serial_mergesort
 tags
