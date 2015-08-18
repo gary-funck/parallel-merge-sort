@@ -7,6 +7,7 @@ The programming languages and frameworks used, include:
   - UPC (Unified Parallel C)
   - OpenMP
   - MPI
+  - MPI-3 RMA
   - Hybrid MPI and OpenMP
   - Hybrid UPC and OpenMP
   
@@ -20,5 +21,7 @@ Gary Funck (<gary@intrepid.com>) re-implemented the OpenMP and hybrid programs u
 [UPC](https://upc-lang.org/assets/Uploads/spec/upc-lang-spec-1.3.pdf) programming language.
 The hybrid implementation combines UPC and OpenMP.  The UPC programs were compiled with
 the [GNU UPC](http://gccupc.org/) compiler.
+Gary also re-implemented the UPC benchmarks into MPI programs that make use of
+MPI-3 one-sided (RMA) operations.
 
 This project is open source, per the [GNU GPL](http://www.gnu.org/licenses/gpl.html) license.
