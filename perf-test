@@ -77,12 +77,10 @@ do
     for i in {1..5}; do
       t=`eval "$cmd" |& awk '/^Elapsed = / {printf $3}'`
       [ -n "$t" ] || t="N/A"
-      [ -n "$tsample" ] && t=" $t"
-      t_sample="${tsample}${t}"
+      t_sample+="${tsample:+ }${t}"
     done
-    median=`echo $t | tr ' ' '\n' | sort -k1n | head -3 | tail -1`
+    median=`echo $t_sample | tr ' ' '\n' | sort -k1n | head -3 | tail -1`
     printf "%6s" "$median"
   done
   printf '\n'
-  # The sort below, sorts on np=16 which is generally the fastest.
-done | sort -k7n
+done
