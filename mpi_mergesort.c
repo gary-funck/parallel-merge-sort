@@ -55,7 +55,7 @@ main (int argc, char *argv[])
   int my_rank;
   MPI_Comm_rank (MPI_COMM_WORLD, &my_rank);
   int max_rank = comm_size - 1;
-  int tag = 123, root_rank = 0;
+  int tag = 123;
   // Set test data
   if (my_rank == 0)
     {				// Only root process sets test data 

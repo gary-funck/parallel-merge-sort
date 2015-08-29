@@ -56,7 +56,7 @@ main (int argc, char *argv[])
   int my_rank;
   MPI_Comm_rank (MPI_COMM_WORLD, &my_rank);
   int max_rank = comm_size - 1;
-  int tag = 123, root_rank = 0;
+  int tag = 123;
   // Check arguments
   if (argc != 3)		/* argc must be 3 for proper execution! */
     {
@@ -155,7 +155,6 @@ run_root_mpi (int a[], int size, int temp[], int max_rank, int tag,
 void
 run_node_mpi (int my_rank, int max_rank, int tag, MPI_Comm comm, int threads)
 {
-  int level = topmost_level_mpi (my_rank);
   // Probe for a message and determine its size and sender
   MPI_Status status;
   int size;
@@ -164,10 +163,7 @@ run_node_mpi (int my_rank, int max_rank, int tag, MPI_Comm comm, int threads)
   int parent_rank = status.MPI_SOURCE;
   // Allocate int a[size], temp[size] 
   int *a = malloc (sizeof (int) * size);
-  int *temp = malloc (sizeof (int) * size);
   MPI_Recv (a, size, MPI_INT, parent_rank, tag, comm, &status);
-Was:mergesort_parallel_mpi (a, size, temp, level, my_rank, max_rank, tag, comm,
-			  threads);
   // Send sorted array to parent process
   MPI_Send (a, size, MPI_INT, parent_rank, tag, comm);
   return;
@@ -220,7 +216,6 @@ mergesort_parallel_mpi (int a[], int size, int temp[],
 void
 mergesort_parallel_omp (int a[], int size, int temp[], int threads)
 {
-  int i;
   if (threads == 1)
     {
       //printf("Thread %d begins serial mergesort\n", omp_get_thread_num());
