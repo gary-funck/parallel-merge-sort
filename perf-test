@@ -75,7 +75,7 @@ do
     esac
     t_sample=
     for i in {1..5}; do
-      t=`eval "$cmd" |& awk '/^Elapsed = / {printf $3}'`
+      t=`eval "$cmd" |& awk '/^Elapsed = / {printf "%6.2f\n", $3}'`
       [ -n "$t" ] || t="N/A"
       t_sample+="${tsample:+ }${t}"
     done
