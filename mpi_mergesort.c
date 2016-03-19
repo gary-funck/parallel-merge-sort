@@ -183,6 +183,8 @@ mergesort_parallel_mpi (int a[], int size, int temp[],
       // Sort first half
       mergesort_parallel_mpi (a, size / 2, temp, level + 1, my_rank, max_rank,
 			      tag, comm);
+      // Free the async request (matching receive will complete the transfer).
+      MPI_Request_free (&request);
       // Receive second half sorted
       MPI_Recv (a + size / 2, size - size / 2, MPI_INT, helper_rank, tag,
 		comm, &status);

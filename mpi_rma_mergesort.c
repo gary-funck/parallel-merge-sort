@@ -91,7 +91,7 @@ main (int argc, char *argv[])
       //  Allocation size is 0. This rank doesn't contribute to 'a'.
       MPI_Win_allocate (0, 1, MPI_INFO_NULL, MPI_COMM_WORLD, &a, &win);
     }
-  MPI_Win_lock_all (0, win);
+  MPI_Win_lock_all (MPI_MODE_NOCHECK, win);
   MPI_Barrier (MPI_COMM_WORLD);
   double start = get_time ();
   // All ranks execute the parallel block merge procedure.
@@ -114,6 +114,8 @@ main (int argc, char *argv[])
       puts ("-Success-");
     }
   fflush (stdout);
+  MPI_Win_unlock_all (win);
+  MPI_Win_free (&win);
   MPI_Finalize ();
   return 0;
 }
