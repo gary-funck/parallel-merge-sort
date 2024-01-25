@@ -1,9 +1,9 @@
 /* MPI recursive merge sort using MPI-3 RMA operations
 
-   Derived from upc_no_copy_mergesort.upc by Gary Funck <gary@intrepid.com>
+   Derived from upc_no_copy_mergesort.upc by Gary Funck <gary@intrepidtechnologyinc.com>
    Date: 2015-08-17
 
-   Derived from omp_mergesort.c by Gary Funck <gary@intrepid.com>
+   Derived from omp_mergesort.c by Gary Funck <gary@intrepidtechnologyinc.com>
    Date: 2015-05-16
 
    Copyright (C) 2011  Atanas Radenski

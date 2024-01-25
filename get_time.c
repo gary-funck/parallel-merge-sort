@@ -1,5 +1,5 @@
 /* get_time() function.
-   Copyright (C) 2015 Gary Funck <gary@intrepid.com>
+   Copyright (C) 2015 Gary Funck <gary@intrepidtechnologyinc.com>
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License as

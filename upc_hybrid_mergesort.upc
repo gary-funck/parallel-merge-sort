@@ -1,7 +1,7 @@
 /* UPC recursive merge sort
    Copyright (C) 2011  Atanas Radenski
 
-   Derived from hybrid_mergesort.c by Gary Funck <gary@intrepid.com>
+   Derived from hybrid_mergesort.c by Gary Funck <gary@intrepidtechnologyinc.com>
    Date: 2015-05-16
 
  This program is free software; you can redistribute it and/or

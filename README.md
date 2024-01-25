@@ -17,7 +17,7 @@ for Standalone and Clustered SMPs_](http://www1.chapman.edu/~radenski/research/p
 (Proc. PDPTA'11, the 2011 International Conference on Parallel and Distributed Processing
 Techniques and Applications, CSREA Press, 2011, pp. 367-373).
 
-Gary Funck (<gary@intrepid.com>) re-implemented the OpenMP and hybrid programs using the
+Gary Funck (<gary@intrepidtechnologyinc.com>) re-implemented the OpenMP and hybrid programs using the
 [UPC](https://upc-lang.org/assets/Uploads/spec/upc-lang-spec-1.3.pdf) programming language.
 The hybrid implementation combines UPC and OpenMP.  The UPC programs were compiled with
 the [GNU UPC](http://gccupc.org/) compiler.
